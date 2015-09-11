@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Flow</title>
+    <!--bower:css -->
+    <!-- endbower -->
+    <link href="/css/app.css" rel="stylesheet" type="text/css">
+    <!-- begin head scripts -->
+    <!-- head-bower:js -->
+    <!-- endbower -->
+    <!-- end head scripts -->
+    <!--appversion-->
+</head>
+<body>
+
+<header id="header"></header>
+<div id="main-container"></div>
+
+<!-- begin minify -->
+
+<!-- bower:js -->
+<script src="js/vendor/jquery/dist/jquery.js"></script>
+<script src="js/vendor/lodash/dist/lodash.compat.js"></script>
+<script src="js/vendor/backbone/backbone.js"></script>
+<script src="js/vendor/handlebars/handlebars.js"></script>
+<script src="js/vendor/backbone.babysitter/lib/backbone.babysitter.js"></script>
+<script src="js/vendor/backbone.wreqr/lib/backbone.wreqr.js"></script>
+<script src="js/vendor/marionette/lib/core/backbone.marionette.js"></script>
+<script src="js/vendor/autosize/dist/autosize.js"></script>
+<!-- endbower -->
+
+<!-- inject:js -->
+<script src="js/App.js"></script>
+<script src="js/AppRouter.js"></script>
+<script src="js/Bootstrap.js"></script>
+<script src="js/compiled-templates.js"></script>
+<script src="js/entities/projects/ProjectModel.js"></script>
+<script src="js/entities/projects/ProjectCollection.js"></script>
+<script src="js/modules/projects/views/ProjectViews.js"></script>
+<script src="js/modules/projects/ProjectController.js"></script>
+<!-- endinject -->
+
+<!-- end minify -->
+</body>
+</html>

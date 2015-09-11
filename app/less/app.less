@@ -2,70 +2,75 @@ body{
 	background:#eee;
 	padding:0;
 	margin:0;
+	#left-side{
+		background:#333;
+		position:fixed;
+		top:0;
+		bottom:0;
+		left:0;
+		width:240px;
+		#flow-logo{
+			text-align:center;
+			padding-top:1em;
+			img{
+				width:200px;
+			}
+		}
+	}
 }
-#left-side{
-	background:#333;
-	position:fixed;
-	top:0;
-	bottom:0;
-	left:0;
-	width:240px;
-}
-#flow-logo{
-	text-align:center;
-	padding-top:1em;
-}
-#flow-logo img{
-	width:200px;
-}
+
+
 #projects{
 	background: #fff;
     width: 500px;
     padding: 4em;
     margin-left:240px;
 }
-.handle{
-    border-width: 2px;
-    border-style: solid;
-    margin: 0 !important;
-    padding: 0 !important;
-    position: absolute;
-    left: -19px;
-    display: inline-block;
-    width: 19px;
-    height: 19px;
-    z-index: 1;
-    background: #fff;
-    border-radius: 6px;
-}
+
 ul{
     border-left: 1px solid #dbe9ee;
     list-style: none;
     margin: 0 0 0 10px;
     padding-left: 0;
 	line-height:1.8em;
+	li{
+	    margin: 0 0 0 7px;
+	    padding: 4px 0 4px 15px;
+	    position: relative;
+		    .handle{
+		    border-width: 2px;
+		    border-style: solid;
+		    margin: 0 !important;
+		    padding: 0 !important;
+		    position: absolute;
+		    left: -19px;
+		    display: inline-block;
+		    width: 19px;
+		    height: 19px;
+		    z-index: 1;
+		    background: #fff;
+		    border-radius: 6px;
+		}
+		&:first-child{
+			padding-top:0;
+		}
+		&:last-child{
+			padding-bottom:0;
+		}
+	}
+	> li:first-child > div > .sortableListsOpener{
+		border-top:4px solid #fff;
+		top:0;
+	}
 }
-ul li{
-    margin: 0 0 0 7px;
-    padding: 4px 0 4px 15px;
-    position: relative;
-}
-ul li:first-child{
-	padding-top:0;
-}
-ul li:last-child{
-	padding-bottom:0;
-}
+
+
 input[type=checkbox]{
 	margin: 0px 6px 0px -17px;
 	margin: 0 !important;
 	position: absolute;
 	right:0px;
 	top:3px;
-}
-ul > li:first-child > div > .sortableListsOpener{
-	border-top:4px solid #fff;
-	top:0;
 }
 li.category > input[type=checkbox]{
 	display:none;
@@ -153,7 +158,6 @@ li > div {
 	border-color: #da9576;
 	background-color: #da9576;
 }
-
 .list-color-5{
 	border-left-color: #da7686;
 }
