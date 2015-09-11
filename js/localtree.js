@@ -13,7 +13,7 @@
 			var actions = lis.not(categories).addClass('actionable');
 
 			$('#projects ul').each(function(index, item){
-				$(item).removeClass().addClass('list-color-' + ((index % 4) + 1));
+				$(item).removeClass().addClass('list-color-' + ((index % 6) + 1));
 			})
 		};
 
