@@ -5,6 +5,7 @@ var handlebars = require('gulp-handlebars');
 var wrap = require('gulp-wrap');
 var wiredep = require('wiredep').stream;
 var bower = require('gulp-bower');
+var less = require('gulp-less');
 var declare = require('gulp-declare');
 var concat = require('gulp-concat');
 var inject = require('gulp-inject');
@@ -47,6 +48,14 @@ gulp.task('wiredep', ['bower'], function(){
 gulp.task('lint', function(){
     return gulp.src(paths.scripts)
         .pipe(jshint());
+});
+
+gulp.task('less', function(){
+    var css = gulp.src('app/less/app.less').pipe(less({
+        paths: paths.style
+    }));
+
+    css.pipe(gulp.dest('app/css/'));
 });
 
 gulp.task('templates', function(){
@@ -109,7 +118,7 @@ gulp.task('watch', function(){
     gulp.watch('./bower.json', ['bower', 'wiredep']);
 });
 
-gulp.task('build', ['bower', 'wiredep', 'templates', 'inject', 'lint'], function(cb){
+gulp.task('build', ['bower', 'wiredep', 'less', 'templates', 'inject', 'lint'], function(cb){
     var err = null;
     cb(err);
 });
