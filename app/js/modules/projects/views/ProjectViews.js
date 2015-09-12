@@ -26,7 +26,8 @@ App.module('Projects.ProjectViews', function(ProjectViews, App, Backbone){
         ui:{
             textarea: 'textarea',
             checkbox: ':checkbox',
-            handle: 'span.handle'
+            handle: 'span.handle',
+            projects: 'ol'
         },
         events: {
             // Form Interactions
@@ -56,8 +57,27 @@ App.module('Projects.ProjectViews', function(ProjectViews, App, Backbone){
             view.options.rootView().updateColors();
             view.$el.draggable({
                 revert: true,
-                helper: function(e){
-                    return view.onStartDrag.call(view, e);
+                // helper: function(e){
+                //     return view.getDraggableClone.call(view, e);
+                // },
+                start: function(e){
+                    return view.onDragStart.call(view, e);
+                },
+                stop: function(e){
+                    return view.onDragStop.call(view, e);
+                }
+            }).droppable({
+                greedy: true,
+                tolerance: 'pointer',
+                hoverClass: 'drag-hover',
+                drop: function(e){
+                    return view.onDrop.call(view, e);
+                },
+                over: function(e){
+                    return view.onOver.call(view, e);
+                },
+                out: function(e){
+                    return view.onOut.call(view, e);
                 }
             });
         },
@@ -106,23 +126,34 @@ App.module('Projects.ProjectViews', function(ProjectViews, App, Backbone){
         // ========================
         // DRAGGABLE EVENTS
         // ========================
-        onStartDrag: function(e){
-            // Create a clone
-            var clone = $(e.currentTarget).clone();
+        getDraggableClone: function(e){
+            var original = $(e.currentTarget);
+            return original.clone().addClass('draggable-clone').css('width', original.width());
+        },
+        onDragStart: function(e){
+            this.$el.addClass('placeholder-outgoing');
+        },
+        onDragStop: function(e){
+            this.$el.removeClass('placeholder-outgoing');
+        },
 
-            this.convertToPlaceholder();
-
-
-            return clone;
+        // ========================
+        // DROPPABLE EVENTS
+        // ========================
+        onDrop: function(e){
+            this.removeIncomingPlaceholder();
+        },
+        onOver: function(e){
+            this.createIncomingPlaceholder();
+        },
+        onOut: function(e){
+            this.removeIncomingPlaceholder();
         },
 
 
         // ========================
-        // VIEW METHODS
+        // CREATION METHODS
         // ========================
-        convertToPlaceholder: function(){
-            this.$el.css('visibility', 'hidden');
-        },
 
         createChild: function(){
             this.collection.add({});
@@ -138,6 +169,18 @@ App.module('Projects.ProjectViews', function(ProjectViews, App, Backbone){
                 previousSibling.children.last().ui.textarea.focus();
             }
         },
+
+
+        // ========================
+        // ORGANIZING METHODS
+        // ========================
+        createIncomingPlaceholder: function(){
+            var placehlder = $('<li />').addClass('placeholder-incoming');
+            this.$el.after(placehlder);
+        },
+        removeIncomingPlaceholder: function(){
+            this.$el.siblings('.placeholder-incoming').remove();
+        }
 
     });
 
