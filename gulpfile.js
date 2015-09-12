@@ -113,6 +113,7 @@ gulp.task('inject', ['templates'], function(){
 });
 
 gulp.task('watch', function(){
+    gulp.watch(paths.less, ['less']);
     gulp.watch(paths.scripts, ['lint', 'inject']);
     gulp.watch(paths.templates, ['templates']);
     gulp.watch('./bower.json', ['bower', 'wiredep']);
