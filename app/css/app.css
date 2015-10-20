@@ -1,28 +1,54 @@
+html {
+  height: 100%;
+}
 body {
   background: #eee;
   padding: 0;
   margin: 0;
+  height: 100%;
 }
-body aside#main-left {
+body #main-container {
+  height: 100%;
+}
+body #main-container #layout-view aside#main-left {
   background: #333;
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   width: 240px;
+  text-align: center;
 }
-body aside#main-left #logo {
+body #main-container #layout-view aside#main-left span.icon {
+  display: inline-block;
   text-align: center;
   padding-top: 1em;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  width: 80px;
+  height: 80px;
 }
-body aside#main-left #logo img {
-  width: 200px;
+body #main-container #layout-view aside#main-left span.icon#logo {
+  width: 100px;
+  height: 155px;
+  background-image: url(/img/logo.png);
 }
-body section#main {
+body #main-container #layout-view aside#main-left span.icon.heirarchy {
+  background-image: url(/img/heirarchy.png);
+}
+body #main-container #layout-view aside#main-left nav a {
+  display: block;
+  margin: 3em 0;
+  border-bottom: 1px solid #666;
+}
+body #main-container #layout-view section#main {
   background: #fff;
   width: 500px;
   padding: 4em;
   margin-left: 240px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
 }
 #sortableListsBase {
   padding: 0;
@@ -109,6 +135,7 @@ li textarea.clickable {
   border-radius: 5px;
   margin-left: -18px;
   background: #f6f6f6;
+  padding: 0 !important;
 }
 .placeholder {
   display: none !important;

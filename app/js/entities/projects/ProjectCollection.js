@@ -1,6 +1,8 @@
 App.module('Entities.Projects', function(Projects, App) {
     'use strict';
 
+    var initialProjects = [{"name":"Groceries","completed":false,"hasChildren":true,"projects":[{"name":"Bread","completed":false,"hasChildren":false,"projects":[]},{"name":"Produce","completed":false,"hasChildren":true,"projects":[{"name":"Bananas","completed":false,"hasChildren":false,"projects":[]},{"name":"Peppers","completed":false,"hasChildren":false,"projects":[]}]}]},{"name":"Work Stuff","completed":false,"hasChildren":true,"projects":[{"name":"Email Joe that thing","completed":false,"hasChildren":false,"projects":[]}]}];
+
     Projects.ProjectCollection = Backbone.Collection.extend({
         model: App.Entities.Projects.ProjectModel,
         initialize: function(){
@@ -25,7 +27,7 @@ App.module('Entities.Projects', function(Projects, App) {
             if(localCache && localCache.length > 0){
                 this.reset(localCache); // reset with local cache
             }else{
-                this.reset([{}]); // reset with one empty task
+                this.reset(initialProjects); // reset with one empty task
             }
         }
     });

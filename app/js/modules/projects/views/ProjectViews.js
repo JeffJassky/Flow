@@ -166,6 +166,7 @@ App.module('Projects.ProjectViews', function(ProjectViews, App, Backbone){
                 hintWrapperClass: 'hint-wrapper',
                 isAllowed: function(cEl, hint, target){
                     // console.log(cEl, hint, target);
+                    return true;
                     return hint.parent().prop("tagName") == 'OL';
                     return $(target).hasClass('sortableListsOpen');
                 },

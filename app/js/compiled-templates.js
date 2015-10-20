@@ -6,7 +6,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<aside id=\"main-left\">\n	<div id=\"logo\">\n\n	</div>\n	<nav>\n		<a href=\"#/something\">Something</a>\n	</nav>\n</aside>\n<section id=\"main\">\n\n</div>";
+  return "<aside id=\"main-left\">\n	<nav>\n		<a href=\"#\" id=\"button-home\">\n			<span class=\"icon\" id=\"logo\"></div>\n		</a>\n		<a href=\"#/something\" id=\"button-heirarchy\">\n			<span class=\"icon heirarchy\"></div>\n		</a>\n	</nav>\n</aside>\n<section id=\"main\">\n\n</div>";
   });
 this["App"] = this["App"] || {};
 this["App"]["templates"] = this["App"]["templates"] || {};

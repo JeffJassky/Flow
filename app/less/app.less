@@ -1,27 +1,58 @@
+html{
+	height: 100%;
+}
 body{
 	background:#eee;
 	padding:0;
 	margin:0;
-	aside#main-left{
-		background:#333;
-		position:fixed;
-		top:0;
-		bottom:0;
-		left:0;
-		width:240px;
-		#logo{
-			text-align:center;
-			padding-top:1em;
-			img{
-				width:200px;
+	height: 100%;
+	#main-container{
+		height:100%;
+		#layout-view {
+			aside#main-left{
+				background:#333;
+				position:fixed;
+				top:0;
+				bottom:0;
+				left:0;
+				width:240px;
+				text-align:center;
+				
+				span.icon{
+					display:inline-block;
+					text-align:center;
+					padding-top:1em;
+					background-repeat: no-repeat;
+					background-size:100%;
+					width:80px;
+					height:80px;
+					&#logo{
+						width:100px;
+						height:155px;
+						background-image:url(/img/logo.png);
+					}
+					&.heirarchy{
+						background-image:url(/img/heirarchy.png);
+					}
+				}
+				nav{
+					a{
+						display:block;
+						margin:3em 0;
+						border-bottom:1px solid #666;
+					}
+				}
+			}
+			section#main{
+				background: #fff;
+			    width: 500px;
+			    padding: 4em;
+			    margin-left: 240px;
+			    position: absolute;
+			    top: 0;
+			    bottom: 0;
 			}
 		}
-	}
-	section#main{
-		background: #fff;
-	    width: 500px;
-	    padding: 4em;
-	    margin-left:240px;
 	}
 }
 #sortableListsBase{
@@ -113,6 +144,7 @@ li{
 	border-radius:5px;
 	margin-left:-18px;
 	background:#f6f6f6;
+	padding:0 !important;
 }
 .placeholder{
 	display:none !important;
