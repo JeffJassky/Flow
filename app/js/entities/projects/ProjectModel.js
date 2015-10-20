@@ -9,6 +9,9 @@ App.module('Entities.Projects', function(Projects, App) {
             hasChildren: false
         },
         projects: App.Entities.Projects.ProjectCollection,
+        events: {
+            'change': 'save'
+        },
 
         // ========================
         // BUILT IN EVENTS
@@ -41,6 +44,9 @@ App.module('Entities.Projects', function(Projects, App) {
             var data = this.toJSON();
             data.projects = this.projects.serialize();
             return data;
+        },
+        save: function(){
+            this.data.projectsCollection.save();
         }
     });
 

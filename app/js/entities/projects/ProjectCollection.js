@@ -3,6 +3,9 @@ App.module('Entities.Projects', function(Projects, App) {
 
     Projects.ProjectCollection = Backbone.Collection.extend({
         model: App.Entities.Projects.ProjectModel,
+        initialize: function(){
+            this.listenTo(this, 'change add remove', this.save);
+        },
         serialize: function(){
         	var array = [];
         	this.each(function(model){
@@ -11,10 +14,19 @@ App.module('Entities.Projects', function(Projects, App) {
         	return array;
         },
         save: function(){
-        	localStorage.setItem("projects", this.serialize());
+        	localStorage.setItem("projects",
+                JSON.stringify(
+                    App.data.projectsCollection.serialize()
+                )
+            );
         },
         fetch: function(){
-        	this.reset(localStorage.getItem('projects'));
+            var localCache = JSON.parse(localStorage.getItem('projects'));
+            if(localCache && localCache.length > 0){
+                this.reset(localCache); // reset with local cache
+            }else{
+                this.reset([{}]); // reset with one empty task
+            }
         }
     });
     

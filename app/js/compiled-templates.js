@@ -1,5 +1,15 @@
 this["App"] = this["App"] || {};
 this["App"]["templates"] = this["App"]["templates"] || {};
+this["App"]["templates"]["layouts/admin"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<aside id=\"main-left\">\n	<div id=\"logo\">\n\n	</div>\n	<nav>\n		<a href=\"#/something\">Something</a>\n	</nav>\n</aside>\n<section id=\"main\">\n\n</div>";
+  });
+this["App"] = this["App"] || {};
+this["App"]["templates"] = this["App"]["templates"] || {};
 this["App"]["templates"]["projects/project"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};

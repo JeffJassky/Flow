@@ -2,27 +2,37 @@ body{
 	background:#eee;
 	padding:0;
 	margin:0;
+	aside#main-left{
+		background:#333;
+		position:fixed;
+		top:0;
+		bottom:0;
+		left:0;
+		width:240px;
+		#logo{
+			text-align:center;
+			padding-top:1em;
+			img{
+				width:200px;
+			}
+		}
+	}
+	section#main{
+		background: #fff;
+	    width: 500px;
+	    padding: 4em;
+	    margin-left:240px;
+	}
 }
-#left-side{
-	background:#333;
-	position:fixed;
-	top:0;
-	bottom:0;
-	left:0;
-	width:240px;
+#sortableListsBase{
+	padding:0;
+	margin:0;
+	list-style-type:none;
 }
-#flow-logo{
-	text-align:center;
-	padding-top:1em;
-}
-#flow-logo img{
-	width:200px;
-}
-#projects{
-	background: #fff;
-    width: 500px;
-    padding: 4em;
-    margin-left:240px;
+#sortableListsHintWrapper{
+	padding:0;
+	margin:0;
+	list-style-type:none;
 }
 .handle{
     border-width: 2px;
@@ -38,6 +48,9 @@ body{
     background: #fff;
     border-radius: 6px;
 }
+.handle +.hint-wrapper{
+	display:none !important;
+}
 ol{
     border-left: 1px solid #dbe9ee;
     list-style: none;
@@ -45,63 +58,56 @@ ol{
     padding-left: 0;
 	line-height:1.8em;
 }
-ol li{
+li{
     margin: 0 0 0 7px;
     padding: 4px 0 4px 15px;
     position: relative;
-}
-ol li:first-child{
-	padding-top:0;
-}
-ol li:last-child{
-	padding-bottom:0;
-}
-input[type=checkbox]{
-	margin: 0px 6px 0px -17px;
-	margin: 0 !important;
-	position: absolute;
-	right:0px;
-	top:3px;
-}
-ol > li:first-child > div > .sortableListsOpener{
-	border-top:4px solid #fff;
-	top:0;
-}
-li.category > input[type=checkbox]{
-	display:none;
-}
-li.category > ol {
-    margin-top: 7px;
-}
-li.category > .handle{
-	background-color:#fff !important;
-}
-li.actionable > .handle{
-	border-color:#fff !important;
-}
-textarea.clickable {
-    padding: 0 0 0 6px;
-    background: transparent;
-    font: inherit;
-    border: 0;
-    line-height: 1.6em;
-    outline: 0;
-    resize: none;
-    margin-left: -6px;
-    float: left;
-    font-size: 16px;
-    font-family: 'Myriad Pro';
-    margin-bottom:-2px;
-    width:90%;
-}
-li.actionable > .handle{
-	background-color:#eee;
+    &:first-child{
+		padding-top:0;
+	}
+	&:last-child{
+		padding-bottom:0;
+	}
+	&.category{
+		> ol {
+		    margin-top: 7px;
+		}
+		> .handle{
+			background-color:#fff !important;
+		}
+		> input[type=checkbox]{
+			display:none;
+		}
+	}
+	&.actionable > .handle{
+		border-color:#fff !important;
+		background-color:#eee;
+	}
+	input[type=checkbox]{
+		margin: 0px 6px 0px -17px;
+		margin: 0 !important;
+		position: absolute;
+		right:0px;
+		top:3px;
+	}
+	textarea.clickable {
+	    padding: 0 0 0 6px;
+	    background: transparent;
+	    font: inherit;
+	    border: 0;
+	    line-height: 1.6em;
+	    outline: 0;
+	    resize: none;
+	    margin-left: -6px;
+	    float: left;
+	    font-size: 16px;
+	    font-family: 'Myriad Pro';
+	    margin-bottom:-2px;
+	    width:90%;
+	}
 }
 
-.hinto{
-	background: #fff url(/img/hint-background.png) no-repeat 0 5px;
-	margin-left:-1px;
-}
+
 .hint{
 	border:2px dashed #ddd;
 	border-radius:5px;
@@ -109,7 +115,7 @@ li.actionable > .handle{
 	background:#f6f6f6;
 }
 .placeholder{
-display:none !important;
+	display:none !important;
 }
 .sortableListsCurrent{
 	margin-left:25px;
@@ -124,30 +130,6 @@ li > div {
     overflow: auto;
 }
 
-
-
-li.placeholder-outgoing{
-	opacity:0;
-}
-li.placeholder-incoming{
-	background:#ddd;
-	border-radius:10px;
-	border:3px dashed #ccc;
-	min-height:1em;
-	margin-left:-20px;
-}
-li.draggable-clone{
-	input{
-		display:none;
-	}
-}
-
-li.drag-hover{
-	background:yellow;
-}
-ol.drag-hover{
-	background:red;
-}
 
 
 .list-color-1{
@@ -178,7 +160,6 @@ ol.drag-hover{
 	border-color: #da9576;
 	background-color: #da9576;
 }
-
 .list-color-5{
 	border-left-color: #da7686;
 }

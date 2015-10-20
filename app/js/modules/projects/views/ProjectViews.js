@@ -36,13 +36,6 @@ App.module('Projects.ProjectViews', function(ProjectViews, App, Backbone){
             'blur > div textarea': 'onTextareaBlur',
             'change > div textarea': 'onTextareaChange',
             'change > :checkbox': 'onCheckboxChange',
-
-            // Draggable Interactions
-            // 'mousedown > span.handle': 'onHandleMousedown',
-            // 'mousemove > span.handle': 'onHandleMousemove',
-            // 'mouseup > span.handle': 'onHandleMouseup',
-
-            // Droppable Interactions
         },
 
         // ========================
@@ -51,35 +44,17 @@ App.module('Projects.ProjectViews', function(ProjectViews, App, Backbone){
         initialize: function(){
             this.collection = this.model.projects;
             this.onHasChildrenChanged();
+            this.options.rootView().childViewIndex[this.cid] = this; // Add this view to global index
+        },
+        onRender: function(){
+            this.$el.attr('data-cid', this.cid);
         },
         onShow: function(){
             var view = this;
             view.options.rootView().updateColors();
-            view.$el.draggable({
-                revert: true,
-                // helper: function(e){
-                //     return view.getDraggableClone.call(view, e);
-                // },
-                start: function(e){
-                    return view.onDragStart.call(view, e);
-                },
-                stop: function(e){
-                    return view.onDragStop.call(view, e);
-                }
-            }).droppable({
-                greedy: true,
-                tolerance: 'pointer',
-                hoverClass: 'drag-hover',
-                drop: function(e){
-                    return view.onDrop.call(view, e);
-                },
-                over: function(e){
-                    return view.onOver.call(view, e);
-                },
-                out: function(e){
-                    return view.onOut.call(view, e);
-                }
-            });
+        },
+        onBeforeDestroy: function(){
+            delete this.options.rootView().childViewIndex[this.cid]; // Remove this view from global index
         },
 
         // ========================
@@ -123,33 +98,6 @@ App.module('Projects.ProjectViews', function(ProjectViews, App, Backbone){
             }
         },
 
-        // ========================
-        // DRAGGABLE EVENTS
-        // ========================
-        getDraggableClone: function(e){
-            var original = $(e.currentTarget);
-            return original.clone().addClass('draggable-clone').css('width', original.width());
-        },
-        onDragStart: function(e){
-            this.$el.addClass('placeholder-outgoing');
-        },
-        onDragStop: function(e){
-            this.$el.removeClass('placeholder-outgoing');
-        },
-
-        // ========================
-        // DROPPABLE EVENTS
-        // ========================
-        onDrop: function(e){
-            this.removeIncomingPlaceholder();
-        },
-        onOver: function(e){
-            this.createIncomingPlaceholder();
-        },
-        onOut: function(e){
-            this.removeIncomingPlaceholder();
-        },
-
 
         // ========================
         // CREATION METHODS
@@ -170,23 +118,27 @@ App.module('Projects.ProjectViews', function(ProjectViews, App, Backbone){
             }
         },
 
-
         // ========================
-        // ORGANIZING METHODS
+        // REORGANIZING METHODS
         // ========================
-        createIncomingPlaceholder: function(){
-            var placehlder = $('<li />').addClass('placeholder-incoming');
-            this.$el.after(placehlder);
+        removeChildModel: function(model){
+            this.collection.remove(model);
         },
-        removeIncomingPlaceholder: function(){
-            this.$el.siblings('.placeholder-incoming').remove();
+        addChildModel: function(model, index){
+            this.collection.add(model, {at: index});
         }
-
     });
 
     ProjectViews.RootList = Backbone.Marionette.CollectionView.extend({
+        id: 'project-root',
         tagName: 'ol',
         childView: ProjectViews.Project,
+        childViewIndex: {},
+        dragging: {
+            view: null,
+            originalParent: null,
+            newParent: null 
+        },
         childViewOptions: function(){
             var view = this;
             return {
@@ -199,12 +151,60 @@ App.module('Projects.ProjectViews', function(ProjectViews, App, Backbone){
             };
         },
         updateColors: function(){
-            this.$el.find('ol').each(function(index, list){
+            this.$el.find('li').parents('ol').each(function(index, list){
                 $(list).removeClass().addClass('list-color-' + ((index % 6) + 1));
             });
         },
         onShow: function(){
             this.updateColors();
+        },
+        onRender: function(){
+            var rootView = this;
+            var options = {
+                placeholderClass: 'placeholder',
+                hintClass: 'hint',
+                hintWrapperClass: 'hint-wrapper',
+                isAllowed: function(cEl, hint, target){
+                    // console.log(cEl, hint, target);
+                    return hint.parent().prop("tagName") == 'OL';
+                    return $(target).hasClass('sortableListsOpen');
+                },
+                ignoreClass: 'clickable',
+                onDragStart: function(e, $el){
+                    // Cache the view being dragged and the parent that it came from
+                    rootView.dragging.view = rootView.childViewIndex[$el.data('cid')];
+                    rootView.dragging.originalParent = rootView.childViewIndex[$el.parent().closest('li').data('cid')] || rootView;
+                    console.log("onDragStart:", rootView.dragging);
+                },
+                complete: function($el, index){
+                    // Get the items new parent view
+                    rootView.dragging.newParent = rootView.childViewIndex[$el.parent().closest('li').data('cid')] || rootView;
+                    console.log("complete:", rootView.dragging);
+
+                    // Move the model from one collection to another
+                    var model = rootView.dragging.view.model;
+                    rootView.dragging.originalParent.removeChildModel(model);
+                    rootView.dragging.newParent.addChildModel(model, index);
+
+                    // Reset the dragged view
+                    rootView.dragging.view = null;
+                    rootView.dragging.originalParent = null;
+                    rootView.dragging.newParentView = null;
+                }
+            };
+
+            // Setup
+            this.$el.sortableLists(options);
+        },
+
+        // ========================
+        // REORGANIZING METHODS
+        // ========================
+        removeChildModel: function(model){
+            this.collection.remove(model);
+        },
+        addChildModel: function(model, index){
+            this.collection.add(model, {at: index});
         }
     });
 

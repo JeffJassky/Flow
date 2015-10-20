@@ -18,7 +18,7 @@ App.module('Router', function(Router, App, Backbone, Marionette) {
                 console.log('Hit organize route');
                 App.Projects.Controller.organize();
             }
-        },
+        }
     });
 
 });

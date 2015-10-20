@@ -10,33 +10,14 @@ var App = new Backbone.Marionette.Application({
         user: null
     },
     regions: {
-        header: '#header',
         mainContainer: '#main-container'
     },
     onBeforeStart: function () {
         this.data.projectsCollection = new App.Entities.Projects.ProjectCollection();
-        this.restoreLocalStorage();
+        this.data.projectsCollection.fetch();
     },
     onStart: function(){
         console.log('App started.');
-    },
-    restoreLocalStorage: function(){
-        var projects = [
-            {
-                name: 'Item 1',
-                projects: [
-                    {
-                        name: 'Item 2',
-                        projects: [
-                            {
-                                name: 'Item 3'
-                            }
-                        ]
-                    }
-                ]
-            }
-        ];
-        this.data.projectsCollection.reset(projects);
     }
 });
 

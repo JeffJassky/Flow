@@ -3,11 +3,13 @@ App.module('Projects', function(Projects, App){
 
     Projects.Controller = {
         organize: function(objectType) {
-            App.mainContainer.show(
+            App.Layouts.Controller.switch('admin');
+            App.mainContainer.currentView.main.show(
                 new Projects.ProjectViews.RootList({
                     collection: App.data.projectsCollection
                 })
             );
         }
     };
+
 });
